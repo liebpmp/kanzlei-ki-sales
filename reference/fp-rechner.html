@@ -1,0 +1,43 @@
+<!-- Förderperspektive.de Calculator - Extracted Source Code -->
+<!-- Key Logic:
+  - Inputs: duration (6/12 months), company size (<50, 50-500, >500), funded employees count, avg salary
+  - Company size determines förderquote: <50 = 100% schulung + 75% lohn, 50-500 = 50% + 50%, >500 = 25% + 25%
+  - Lohnkosten = employees × salary × duration_months
+  - Lohnkostenerstattung = Lohnkosten × 75% (for <50)
+  - Schulungswert = employees × 10.000€
+  - Total = Lohnkostenerstattung + Schulungswert
+  - Cash advantage block shows: Erstattung - actual costs during training
+  - Cap: 7.100€ per employee per month
+-->
+
+<!-- JS Logic (reverse-engineered from behavior): -->
+<script>
+function calculateFunding() {
+  const duration = parseInt(document.getElementById('duration').value);
+  const employees = parseInt(document.getElementById('funded-employees').value) || 0;
+  const salary = parseInt(document.getElementById('salary').value) || 0;
+  
+  // Company size determines rates
+  // <50: 100% training + 75% wage subsidy
+  // 50-500: 50% training + 50% wage subsidy  
+  // >500: 25% training + 25% wage subsidy
+  const sizeIndex = document.querySelector('.size-button.active') ? 
+    [...document.querySelectorAll('.size-button')].indexOf(document.querySelector('.size-button.active')) : 0;
+  
+  const rates = [
+    { training: 1.0, wage: 0.75 },   // <50
+    { training: 0.5, wage: 0.50 },   // 50-500
+    { training: 0.25, wage: 0.25 }   // >500
+  ];
+  
+  const rate = rates[sizeIndex];
+  
+  // Calculate
+  const totalWages = employees * salary * duration;
+  const wageSubsidy = totalWages * rate.wage;
+  const trainingValue = employees * 10000; // 10K per employee
+  const totalFunding = wageSubsidy + trainingValue;
+  
+  return { totalWages, wageSubsidy, trainingValue, totalFunding, duration, employees, salary, rate };
+}
+</script>
