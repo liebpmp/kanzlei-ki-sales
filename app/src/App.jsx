@@ -2,31 +2,41 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-import TitleSlide from "./components/slides/TitleSlide";
-import ProblemSlide from "./components/slides/ProblemSlide";
-import SolutionSlide from "./components/slides/SolutionSlide";
-import DemoSlide from "./components/slides/DemoSlide";
-import FoerderungSlide from "./components/slides/FoerderungSlide";
-import RechnerSlide from "./components/slides/RechnerSlide";
-import SchulungSlide from "./components/slides/SchulungSlide";
-import VergleichSlide from "./components/slides/VergleichSlide";
-import AblaufSlide from "./components/slides/AblaufSlide";
-import TrustSlide from "./components/slides/TrustSlide";
-import CTASlide from "./components/slides/CTASlide";
-import SlideNav from "./components/ui/SlideNav";
+import S01_Title from "./slides/S01_Title";
+import S02_Agenda from "./slides/S02_Agenda";
+import S03_Discovery from "./slides/S03_Discovery";
+import S04_Foerderung from "./slides/S04_Foerderung";
+import S05_Rechner from "./slides/S05_Rechner";
+import S06_KI_Overview from "./slides/S06_KI_Overview";
+import S07_KI_Dashboard from "./slides/S07_KI_Dashboard";
+import S08_KI_Graph from "./slides/S08_KI_Graph";
+import S09_ISOYO from "./slides/S09_ISOYO";
+import S10_Curriculum from "./slides/S10_Curriculum";
+import S11_CaseStudies from "./slides/S11_CaseStudies";
+import S12_FAQ from "./slides/S12_FAQ";
+import S13_Proof from "./slides/S13_Proof";
+import S14_Ablauf from "./slides/S14_Ablauf";
+import S15_VorherNachher from "./slides/S15_VorherNachher";
+import S16_CTA from "./slides/S16_CTA";
+import SectionNav from "./components/ui/SectionNav";
 
 const slides = [
-  TitleSlide,
-  ProblemSlide,
-  SolutionSlide,
-  DemoSlide,
-  FoerderungSlide,
-  RechnerSlide,
-  SchulungSlide,
-  VergleichSlide,
-  AblaufSlide,
-  TrustSlide,
-  CTASlide,
+  S01_Title,
+  S02_Agenda,
+  S03_Discovery,
+  S04_Foerderung,
+  S05_Rechner,
+  S06_KI_Overview,
+  S07_KI_Dashboard,
+  S08_KI_Graph,
+  S09_ISOYO,
+  S10_Curriculum,
+  S11_CaseStudies,
+  S12_FAQ,
+  S13_Proof,
+  S14_Ablauf,
+  S15_VorherNachher,
+  S16_CTA,
 ];
 
 const slideVariants = {
@@ -42,8 +52,8 @@ const slideVariants = {
 };
 
 const slideTransition = {
-  x: { type: "tween", duration: 0.5, ease: [0.16, 1, 0.3, 1] },
-  opacity: { duration: 0.3 },
+  x: { type: "tween", duration: 0.45, ease: [0.16, 1, 0.3, 1] },
+  opacity: { duration: 0.25 },
 };
 
 export default function App() {
@@ -60,7 +70,7 @@ export default function App() {
       isAnimating.current = true;
       setDirection(index > currentSlide ? 1 : -1);
       setCurrentSlide(index);
-      setTimeout(() => { isAnimating.current = false; }, 550);
+      setTimeout(() => { isAnimating.current = false; }, 500);
     },
     [currentSlide]
   );
@@ -91,10 +101,13 @@ export default function App() {
 
   return (
     <div
-      className="h-[100dvh] w-screen overflow-hidden relative bg-dark"
+      className="h-[100dvh] w-screen overflow-hidden relative bg-cream"
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >
+      {/* Section navigation (FMI-style) */}
+      <SectionNav currentSlide={currentSlide} onNavigate={goToSlide} />
+
       <AnimatePresence initial={false} custom={direction} mode="wait">
         <motion.div
           key={currentSlide}
@@ -110,37 +123,46 @@ export default function App() {
         </motion.div>
       </AnimatePresence>
 
-      {/* Prev/Next arrow buttons — hidden on mobile (use swipe) */}
+      {/* Desktop nav arrows */}
       {currentSlide > 0 && (
         <button
           onClick={prevSlide}
-          className="hidden md:flex fixed left-4 top-1/2 -translate-y-1/2 z-50 size-12 rounded-full bg-white/80 backdrop-blur-sm shadow-lg items-center justify-center hover:bg-white transition-colors cursor-pointer"
-          aria-label="Previous slide"
+          className="hidden md:flex fixed left-4 top-1/2 -translate-y-1/2 z-50 size-10 rounded-full bg-white/80 backdrop-blur-sm shadow-lg items-center justify-center hover:bg-white transition-colors cursor-pointer"
+          aria-label="Previous"
         >
-          <ChevronLeft className="size-6 text-text-primary" />
+          <ChevronLeft className="size-5 text-text-primary" />
         </button>
       )}
       {currentSlide < slides.length - 1 && (
         <button
           onClick={nextSlide}
-          className="hidden md:flex fixed right-4 top-1/2 -translate-y-1/2 z-50 size-12 rounded-full bg-white/80 backdrop-blur-sm shadow-lg items-center justify-center hover:bg-white transition-colors cursor-pointer"
-          aria-label="Next slide"
+          className="hidden md:flex fixed right-4 top-1/2 -translate-y-1/2 z-50 size-10 rounded-full bg-white/80 backdrop-blur-sm shadow-lg items-center justify-center hover:bg-white transition-colors cursor-pointer"
+          aria-label="Next"
         >
-          <ChevronRight className="size-6 text-text-primary" />
+          <ChevronRight className="size-5 text-text-primary" />
         </button>
       )}
 
-      {/* Slide counter (top right) */}
-      <div className="fixed top-4 right-4 z-50 bg-white/80 backdrop-blur-sm rounded-full px-3 py-1.5 shadow-sm">
-        <span className="text-xs font-semibold text-text-primary">{currentSlide + 1}</span>
-        <span className="text-xs text-text-secondary"> / {slides.length}</span>
+      {/* Slide counter */}
+      <div className="fixed top-14 right-4 z-50 bg-white/80 backdrop-blur-sm rounded-full px-3 py-1 shadow-sm">
+        <span className="text-[11px] font-semibold text-text-primary">{currentSlide + 1}</span>
+        <span className="text-[11px] text-text-secondary"> / {slides.length}</span>
       </div>
 
-      <SlideNav
-        currentSlide={currentSlide}
-        totalSlides={slides.length}
-        onNavigate={goToSlide}
-      />
+      {/* Bottom dot nav (mobile) */}
+      <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 flex items-center gap-1 md:hidden">
+        {slides.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => goToSlide(i)}
+            className={`rounded-full transition-all duration-300 cursor-pointer ${
+              i === currentSlide
+                ? "w-6 h-1.5 bg-maroon"
+                : "w-1.5 h-1.5 bg-text-muted/30"
+            }`}
+          />
+        ))}
+      </div>
     </div>
   );
 }
