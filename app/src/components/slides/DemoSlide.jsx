@@ -113,13 +113,11 @@ export default function DemoSlide({ isActive }) {
   });
 
   return (
-    <div className="h-screen w-screen flex items-center justify-center overflow-y-auto bg-dark relative">
-      {/* Ambient glow behind dashboard */}
+    <div className="min-h-[100dvh] w-screen overflow-y-auto bg-dark relative">
+      {/* Ambient glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(162,30,41,0.12)_0%,rgba(16,185,129,0.04)_40%,transparent_70%)] pointer-events-none blur-[40px]" />
-      {/* Subtle maroon glow */}
-      <div className="absolute top-20 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-maroon/5 rounded-full blur-[150px] pointer-events-none" />
 
-      <div className="slide-content w-full max-w-[1200px] px-6 lg:px-10 py-16 relative z-10">
+      <div className="min-h-[100dvh] flex flex-col justify-center px-5 md:px-10 py-12 pb-20 relative z-10">
         {/* Section header */}
         <div className="mb-10 text-center">
           <motion.div

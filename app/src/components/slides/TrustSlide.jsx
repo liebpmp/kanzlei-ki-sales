@@ -57,14 +57,14 @@ export default function TrustSlide({ isActive }) {
   });
 
   return (
-    <div className="h-screen w-screen flex items-center justify-center overflow-y-auto bg-dark relative">
+    <div className="min-h-[100dvh] w-screen overflow-y-auto bg-dark relative">
       {/* Gradient orb background */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(162,30,41,0.08)_0%,transparent_70%)] pointer-events-none" />
 
       {/* Gradient transition line at top */}
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-maroon/30 to-transparent" />
 
-      <div className="slide-content w-full max-w-[1200px] px-6 lg:px-10 py-16 relative z-10">
+      <div className="slide-content w-full max-w-[1100px] mx-auto px-5 md:px-10 py-12 pb-20 relative z-10">
         {/* Section header */}
         <div className="flex flex-col items-center text-center gap-4 mb-16">
           <motion.div

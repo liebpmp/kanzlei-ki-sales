@@ -20,11 +20,11 @@ export default function CTASlide({ isActive }) {
   });
 
   return (
-    <div className="h-screen w-screen flex items-center justify-center overflow-y-auto bg-maroon relative">
+    <div className="min-h-[100dvh] w-screen overflow-y-auto bg-maroon relative">
       {/* Subtle gradient orb */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.08)_0%,transparent_70%)] pointer-events-none" />
 
-      <div className="slide-content w-full max-w-[1200px] px-6 lg:px-10 py-16 relative z-10 flex flex-col items-center text-center gap-8">
+      <div className="slide-content w-full max-w-[1100px] mx-auto px-5 md:px-10 py-12 pb-20 relative z-10 flex flex-col items-center text-center gap-8">
         {/* Small label */}
         <motion.div
           {...show(0)}

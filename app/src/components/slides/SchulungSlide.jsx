@@ -58,8 +58,8 @@ export default function SchulungSlide({ isActive }) {
   });
 
   return (
-    <div className="h-screen w-screen flex items-center justify-center overflow-y-auto bg-cream">
-      <div className="slide-content w-full max-w-[1200px] px-6 lg:px-10 py-16">
+    <div className="min-h-[100dvh] w-screen overflow-y-auto bg-cream">
+      <div className="slide-content w-full max-w-[1100px] mx-auto px-5 md:px-10 py-12 pb-20">
         {/* Section header */}
         <motion.div
           className="flex flex-col items-center text-center gap-4 mb-16"

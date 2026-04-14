@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import TitleSlide from "./components/slides/TitleSlide";
 import ProblemSlide from "./components/slides/ProblemSlide";
@@ -33,10 +34,7 @@ const slideVariants = {
     x: direction > 0 ? "100%" : "-100%",
     opacity: 0,
   }),
-  center: {
-    x: 0,
-    opacity: 1,
-  },
+  center: { x: 0, opacity: 1 },
   exit: (direction) => ({
     x: direction > 0 ? "-100%" : "100%",
     opacity: 0,
@@ -59,88 +57,43 @@ export default function App() {
       if (isAnimating.current) return;
       if (index < 0 || index >= slides.length) return;
       if (index === currentSlide) return;
-
       isAnimating.current = true;
       setDirection(index > currentSlide ? 1 : -1);
       setCurrentSlide(index);
-
-      setTimeout(() => {
-        isAnimating.current = false;
-      }, 550);
+      setTimeout(() => { isAnimating.current = false; }, 550);
     },
     [currentSlide]
   );
 
-  const nextSlide = useCallback(() => {
-    goToSlide(currentSlide + 1);
-  }, [currentSlide, goToSlide]);
+  const nextSlide = useCallback(() => goToSlide(currentSlide + 1), [currentSlide, goToSlide]);
+  const prevSlide = useCallback(() => goToSlide(currentSlide - 1), [currentSlide, goToSlide]);
 
-  const prevSlide = useCallback(() => {
-    goToSlide(currentSlide - 1);
-  }, [currentSlide, goToSlide]);
-
-  // Keyboard navigation
+  // Keyboard
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if (e.key === "ArrowRight" || e.key === " ") {
-        e.preventDefault();
-        nextSlide();
-      } else if (e.key === "ArrowLeft") {
-        e.preventDefault();
-        prevSlide();
-      }
+      if (e.key === "ArrowRight" || e.key === " ") { e.preventDefault(); nextSlide(); }
+      else if (e.key === "ArrowLeft") { e.preventDefault(); prevSlide(); }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [nextSlide, prevSlide]);
 
   // Touch swipe
-  const handleTouchStart = (e) => {
-    touchStart.current = e.touches[0].clientX;
-  };
-
+  const handleTouchStart = (e) => { touchStart.current = e.touches[0].clientX; };
   const handleTouchEnd = (e) => {
     if (touchStart.current === null) return;
     const diff = touchStart.current - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 50) {
-      if (diff > 0) nextSlide();
-      else prevSlide();
-    }
+    if (Math.abs(diff) > 50) { diff > 0 ? nextSlide() : prevSlide(); }
     touchStart.current = null;
-  };
-
-  // Click navigation (left/right halves)
-  const handleClick = (e) => {
-    // Don't navigate if clicking on interactive elements
-    const tag = e.target.tagName.toLowerCase();
-    if (
-      tag === "button" ||
-      tag === "input" ||
-      tag === "a" ||
-      tag === "select" ||
-      tag === "textarea" ||
-      e.target.closest("button") ||
-      e.target.closest("a") ||
-      e.target.closest("input") ||
-      e.target.closest('[role="button"]')
-    ) {
-      return;
-    }
-
-    const x = e.clientX;
-    const w = window.innerWidth;
-    if (x < w * 0.2) prevSlide();
-    else if (x > w * 0.8) nextSlide();
   };
 
   const CurrentSlideComponent = slides[currentSlide];
 
   return (
     <div
-      className="h-screen w-screen overflow-hidden relative"
+      className="h-[100dvh] w-screen overflow-hidden relative bg-dark"
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
-      onClick={handleClick}
     >
       <AnimatePresence initial={false} custom={direction} mode="wait">
         <motion.div
@@ -157,29 +110,37 @@ export default function App() {
         </motion.div>
       </AnimatePresence>
 
+      {/* Prev/Next arrow buttons — hidden on mobile (use swipe) */}
+      {currentSlide > 0 && (
+        <button
+          onClick={prevSlide}
+          className="hidden md:flex fixed left-4 top-1/2 -translate-y-1/2 z-50 size-12 rounded-full bg-white/80 backdrop-blur-sm shadow-lg items-center justify-center hover:bg-white transition-colors cursor-pointer"
+          aria-label="Previous slide"
+        >
+          <ChevronLeft className="size-6 text-text-primary" />
+        </button>
+      )}
+      {currentSlide < slides.length - 1 && (
+        <button
+          onClick={nextSlide}
+          className="hidden md:flex fixed right-4 top-1/2 -translate-y-1/2 z-50 size-12 rounded-full bg-white/80 backdrop-blur-sm shadow-lg items-center justify-center hover:bg-white transition-colors cursor-pointer"
+          aria-label="Next slide"
+        >
+          <ChevronRight className="size-6 text-text-primary" />
+        </button>
+      )}
+
+      {/* Slide counter (top right) */}
+      <div className="fixed top-4 right-4 z-50 bg-white/80 backdrop-blur-sm rounded-full px-3 py-1.5 shadow-sm">
+        <span className="text-xs font-semibold text-text-primary">{currentSlide + 1}</span>
+        <span className="text-xs text-text-secondary"> / {slides.length}</span>
+      </div>
+
       <SlideNav
         currentSlide={currentSlide}
         totalSlides={slides.length}
         onNavigate={goToSlide}
       />
-
-      {/* Keyboard hint - fades out */}
-      {currentSlide === 0 && (
-        <motion.div
-          className="fixed bottom-20 left-1/2 -translate-x-1/2 text-[12px] text-text-secondary/50 flex items-center gap-2 z-40"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2, duration: 0.5 }}
-        >
-          <span className="px-1.5 py-0.5 border border-border-light rounded text-[10px]">
-            ←
-          </span>
-          <span className="px-1.5 py-0.5 border border-border-light rounded text-[10px]">
-            →
-          </span>
-          <span>Pfeiltasten oder Swipe</span>
-        </motion.div>
-      )}
     </div>
   );
 }

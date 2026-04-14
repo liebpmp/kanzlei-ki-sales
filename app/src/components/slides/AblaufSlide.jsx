@@ -142,7 +142,7 @@ function TimelineStep({ step, index, isLast, isActive }) {
 export default function AblaufSlide({ isActive }) {
   return (
     <div className="h-screen w-screen flex items-center justify-center overflow-y-auto bg-cream">
-      <div className="slide-content w-full max-w-[900px] px-6 lg:px-10 py-12">
+      <div className="slide-content w-full max-w-[1100px] mx-auto px-5 md:px-10 py-12 pb-20">
         {/* Section header */}
         <motion.div
           className="flex flex-col items-center text-center gap-4 mb-12"
@@ -165,8 +165,8 @@ export default function AblaufSlide({ isActive }) {
           </h2>
         </motion.div>
 
-        {/* Vertical Timeline */}
-        <div className="max-w-[600px] mx-auto">
+        {/* Timeline — 2 columns on desktop, single on mobile */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-0 max-w-[900px] mx-auto">
           {steps.map((step, i) => (
             <TimelineStep
               key={step.number}
