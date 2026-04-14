@@ -1,0 +1,209 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* Inter from Google Fonts */
+@font-face {
+  font-family: "Inter Display";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("https://framerusercontent.com/assets/tDsZnZizkUbMO9W7ej7ajqgcfY.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Inter Display";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("https://framerusercontent.com/assets/FKJpLAqqqvO4rEFpkDIDpXbiXKI.woff2") format("woff2");
+}
+
+@theme inline {
+  --font-heading: "Inter Display", "Inter", sans-serif;
+  --font-sans: "Inter", sans-serif;
+
+  /* steuerclara brand colors */
+  --color-cream: #FCF8F2;
+  --color-cream-dark: #F7F6F5;
+  --color-dark: #101010;
+  --color-dark-deep: #000000;
+  --color-maroon: #A21E29;
+  --color-maroon-hover: #8B1923;
+  --color-emerald: #10B981;
+  --color-emerald-light: #D1FAE5;
+  --color-fp-blue: #1B2E47;
+  --color-text-primary: #000000;
+  --color-text-secondary: #595B63;
+  --color-text-muted: rgba(0,0,0,0.5);
+  --color-text-white: #FFFFFF;
+  --color-text-white-muted: rgba(255,255,255,0.5);
+  --color-border-light: rgba(0,0,0,0.08);
+  --color-border-dark: rgba(255,255,255,0.1);
+
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root {
+  --background: #FCF8F2;
+  --foreground: #000000;
+  --card: #FFFFFF;
+  --card-foreground: #000000;
+  --popover: #FFFFFF;
+  --popover-foreground: #000000;
+  --primary: #A21E29;
+  --primary-foreground: #FFFFFF;
+  --secondary: #F7F6F5;
+  --secondary-foreground: #000000;
+  --muted: #F7F6F5;
+  --muted-foreground: #595B63;
+  --accent: #FCF8F2;
+  --accent-foreground: #000000;
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: rgba(0,0,0,0.08);
+  --input: rgba(0,0,0,0.08);
+  --ring: #A21E29;
+  --chart-1: oklch(0.87 0 0);
+  --chart-2: oklch(0.556 0 0);
+  --chart-3: oklch(0.439 0 0);
+  --chart-4: oklch(0.371 0 0);
+  --chart-5: oklch(0.269 0 0);
+  --radius: 0.125rem;
+  --sidebar: #FFFFFF;
+  --sidebar-foreground: #000000;
+  --sidebar-primary: #A21E29;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #F7F6F5;
+  --sidebar-accent-foreground: #000000;
+  --sidebar-border: rgba(0,0,0,0.08);
+  --sidebar-ring: #A21E29;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-cream text-text-primary font-sans antialiased;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  html {
+    @apply font-sans scroll-smooth;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading;
+    font-weight: 600;
+  }
+}
+
+/* V6 Animation Keyframes */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.5); }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+@keyframes border-glow {
+  0%, 100% { border-color: rgba(162, 30, 41, 0.2); }
+  50% { border-color: rgba(162, 30, 41, 0.5); }
+}
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@keyframes count-up {
+  0% { opacity: 0; transform: translateY(8px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes timeline-draw {
+  0% { height: 0; }
+  100% { height: 100%; }
+}
+@keyframes pulse-ring {
+  0% { box-shadow: 0 0 0 0 rgba(162, 30, 41, 0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(162, 30, 41, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(162, 30, 41, 0); }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+.animate-pulse-dot {
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+.animate-border-glow {
+  animation: border-glow 3s ease-in-out infinite;
+}
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+.animate-timeline-draw {
+  animation: timeline-draw 1.5s ease-out forwards;
+}
+.animate-pulse-ring {
+  animation: pulse-ring 2s ease-out infinite;
+}
+
+/* V6b — New premium section additions */
+.text-gradient-gold {
+  background: linear-gradient(135deg, #D3A55B, #E8C97A);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@keyframes typing-dot {
+  0%, 60%, 100% { opacity: 0.3; transform: translateY(0); }
+  30% { opacity: 1; transform: translateY(-4px); }
+}
+
+@keyframes draw-line {
+  0% { stroke-dashoffset: 100; }
+  100% { stroke-dashoffset: 0; }
+}
+
+@keyframes progress-fill {
+  0% { width: 0%; }
+  100% { width: var(--target-width); }
+}
