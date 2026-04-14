@@ -185,7 +185,7 @@ export default function DemoSlide({ isActive }) {
           {/* Agent status table */}
           <div>
             {/* Table header */}
-            <div className="grid grid-cols-[1fr_1fr_1fr_auto] px-4 py-2 text-[9px] text-text-secondary tracking-wider font-semibold border-b border-border-light uppercase">
+            <div className="hidden md:grid grid-cols-[1fr_1fr_1fr_auto] px-4 py-2 text-[9px] text-text-secondary tracking-wider font-semibold border-b border-border-light uppercase">
               <span>Agent</span>
               <span>Bereich</span>
               <span>Tasks</span>
@@ -197,27 +197,22 @@ export default function DemoSlide({ isActive }) {
               <motion.div
                 key={agent.name}
                 {...rowShow(i)}
-                className="grid grid-cols-[1fr_1fr_1fr_auto] items-center px-4 py-2.5 border-b border-border-light/50 last:border-b-0"
+                className="flex items-center gap-2 md:grid md:grid-cols-[1fr_1fr_1fr_auto] px-3 md:px-4 py-2 md:py-2.5 border-b border-border-light/50 last:border-b-0"
               >
-                {/* Agent name with avatar */}
-                <div className="flex items-center gap-3">
-                  <span
-                    className={`w-6 h-6 rounded flex items-center justify-center text-[10px] font-bold text-white ${agent.letterBg}`}
-                  >
-                    {agent.letter}
-                  </span>
-                  <span className="text-sm font-medium text-text-primary">
-                    {agent.name}
-                  </span>
+                {/* Agent avatar */}
+                <span
+                  className={`w-6 h-6 shrink-0 rounded flex items-center justify-center text-[10px] font-bold text-white ${agent.letterBg}`}
+                >
+                  {agent.letter}
+                </span>
+                {/* Name + area on mobile combined */}
+                <div className="flex-1 min-w-0">
+                  <span className="text-xs md:text-sm font-medium text-text-primary truncate block">{agent.name}</span>
+                  <span className="text-[10px] md:hidden text-text-secondary">{agent.area} · {agent.tasks}</span>
                 </div>
-
-                {/* Area */}
-                <span className="text-sm text-text-secondary">{agent.area}</span>
-
-                {/* Tasks */}
-                <span className="text-sm text-text-secondary">{agent.tasks}</span>
-
-                {/* Status badge */}
+                {/* Desktop columns */}
+                <span className="hidden md:block text-sm text-text-secondary">{agent.area}</span>
+                <span className="hidden md:block text-sm text-text-secondary">{agent.tasks}</span>
                 <StatusBadge status={agent.status} />
               </motion.div>
             ))}

@@ -46,9 +46,9 @@ export default function ProblemSlide({ isActive }) {
             </p>
           </motion.div>
 
-          {/* Cards */}
+          {/* Cards — show 4 on mobile, 6 on desktop */}
           <motion.div
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3"
+            className="grid grid-cols-2 lg:grid-cols-3 gap-2 md:gap-3"
             variants={containerVariants}
             initial="hidden"
             animate={isActive ? "visible" : "hidden"}
@@ -59,7 +59,7 @@ export default function ProblemSlide({ isActive }) {
                 <motion.div
                   key={item.title}
                   variants={cardVariants}
-                  className="bg-white border border-border-light rounded-[2px] p-5 md:p-6 shadow-[0_1px_3px_rgba(0,0,0,0.04)] hover:-translate-y-1 hover:shadow-[0_8px_25px_rgba(0,0,0,0.08)] hover:border-maroon/20 transition-all duration-300"
+                  className="bg-white border border-border-light rounded-[2px] p-3 md:p-6 shadow-[0_1px_3px_rgba(0,0,0,0.04)] hover:-translate-y-1 hover:shadow-[0_8px_25px_rgba(0,0,0,0.08)] hover:border-maroon/20 transition-all duration-300"
                 >
                   <div className="size-9 md:size-10 rounded-sm bg-cream-dark flex items-center justify-center mb-3 md:mb-4">
                     <Icon className="size-4 md:size-5 text-text-secondary" />
